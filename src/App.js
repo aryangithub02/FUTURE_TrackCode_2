@@ -10,41 +10,44 @@ import SummaryApi, { API_MODE } from './common';
 import Context from './context';
 import { useDispatch } from 'react-redux';
 import { setUserDetails } from './store/userSlice';
+import { useUser } from '@clerk/clerk-react';
 
 function App() {
   const dispatch = useDispatch()
+  const { isLoaded, isSignedIn, user } = useUser();
   const [cartProductCount,setCartProductCount] = useState(0)
 
-  const fetchUserDetails = async()=>{
-      try {
-        const dataResponse = await fetch(SummaryApi.current_user.url,{
-          method : SummaryApi.current_user.method,
-          credentials : 'include'
-        })
-
-        const dataApi = await dataResponse.json()
-
-        if(dataApi.success){
-          dispatch(setUserDetails(dataApi.data))
-        }
-      } catch (error) {
-        console.log('User not authenticated')
-        // In DummyJSON mode, create a guest user
-        if (API_MODE === 'dummyjson') {
-          dispatch(setUserDetails({
-            _id: 'guest',
-            name: 'Guest User',
-            email: 'guest@techstore.com',
-            role: 'USER'
-          }))
-        }
+  // 🔹 Sync Clerk user with Redux
+  useEffect(() => {
+    if (isLoaded && isSignedIn && user) {
+      dispatch(setUserDetails({
+        _id: user.id,
+        name: user.fullName || `${user.firstName} ${user.lastName}`.trim(),
+        email: user.primaryEmailAddress?.emailAddress,
+        profilePic: user.imageUrl,
+        role: 'USER'
+      }))
+    } else if (isLoaded && !isSignedIn) {
+      if (API_MODE === 'dummyjson') {
+        dispatch(setUserDetails({
+          _id: 'guest',
+          name: 'Guest User',
+          email: 'guest@TechLoom.com',
+          role: 'USER'
+        }))
+      } else {
+        dispatch(setUserDetails(null))
       }
+    }
+  }, [isLoaded, isSignedIn, user, dispatch])
+
+  const fetchUserDetails = async()=> {
+    console.log('User details now managed by Clerk')
   }
 
-  const fetchUserAddToCart = async()=>{
+  const fetchUserAddToCart = async()=> {
     try {
       if (API_MODE === 'dummyjson') {
-        // Get cart count from localStorage
         const cart = JSON.parse(localStorage.getItem('dummyCart') || '[]')
         const count = cart.reduce((total, item) => total + item.quantity, 0)
         setCartProductCount(count)
@@ -53,7 +56,6 @@ function App() {
           method : SummaryApi.addToCartProductCount.method,
           credentials : 'include'
         })
-
         const dataApi = await dataResponse.json()
         setCartProductCount(dataApi?.data?.count)
       }
@@ -63,43 +65,20 @@ function App() {
     }
   }
 
-  // Listen for cart updates in DummyJSON mode
-  useEffect(() => {
-    if (API_MODE === 'dummyjson') {
-      const handleCartUpdate = () => {
-        fetchUserAddToCart()
-      }
-      
-      window.addEventListener('cartUpdated', handleCartUpdate)
-      return () => window.removeEventListener('cartUpdated', handleCartUpdate)
-    }
-  }, [])
-
-  useEffect(()=>{
-    /**user Details */
+  useEffect(()=> {
     fetchUserDetails()
-    /**user Details cart product */
     fetchUserAddToCart()
-
   },[])
+
   return (
-    <>
-      <Context.Provider value={{
-          fetchUserDetails, // user detail fetch 
-          cartProductCount, // current user add to cart product count,
-          fetchUserAddToCart
-      }}>
-        <ToastContainer 
-          position='top-center'
-        />
-        
-        <Header/>
-        <main className='min-h-[calc(100vh-120px)] pt-16'>
-          <Outlet/>
-        </main>
-        <Footer/>
-      </Context.Provider>
-    </>
+    <Context.Provider value={{ fetchUserDetails, cartProductCount, fetchUserAddToCart }}>
+      <ToastContainer position='top-center' theme="dark" />
+      <Header/>
+      <main className='min-h-[calc(100vh-120px)] pt-16 bg-gradient-to-br from-dark-900 to-dark-800'>
+        <Outlet/>
+      </main>
+      <Footer/>
+    </Context.Provider>
   );
 }
 

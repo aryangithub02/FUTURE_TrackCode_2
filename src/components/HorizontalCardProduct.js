@@ -11,7 +11,6 @@ const HorizontalCardProduct = ({category, heading}) => {
     const [loading,setLoading] = useState(true)
     const loadingList = new Array(13).fill(null)
 
-    const [scroll,setScroll] = useState(0)
     const scrollElement = useRef()
 
 
@@ -27,7 +26,6 @@ const HorizontalCardProduct = ({category, heading}) => {
         const categoryProduct = await fetchCategoryWiseProduct(category)
         setLoading(false)
 
-        console.log("horizontal data",categoryProduct.data)
         setData(categoryProduct?.data)
     }
 
@@ -47,31 +45,30 @@ const HorizontalCardProduct = ({category, heading}) => {
     <div className='container mx-auto px-4 my-12 relative'>
 
             <div className='flex items-center justify-between mb-8'>
-                <h2 className='text-3xl font-bold bg-gradient-to-r from-primary-600 to-primary-800 bg-clip-text text-transparent'>{heading}</h2>
-                <div className='flex gap-2'>
-                    <button className='bg-primary-100 hover:bg-primary-200 text-primary-600 rounded-full p-2 transition-all duration-300 transform hover:scale-110 shadow-md' onClick={scrollLeft}><FaAngleLeft/></button>
-                    <button className='bg-primary-100 hover:bg-primary-200 text-primary-600 rounded-full p-2 transition-all duration-300 transform hover:scale-110 shadow-md' onClick={scrollRight}><FaAngleRight/></button>
+                <h2 className='text-3xl font-bold bg-gradient-to-r from-neon-blue to-neon-purple bg-clip-text text-transparent hover:animate-neon-pulse'>{heading}</h2>
+                <div className='flex gap-3'>
+                    <button className='bg-dark-800 hover:bg-dark-700 text-neon-blue border border-neon-blue rounded-full p-3 transition-all duration-300 transform hover:scale-110 hover:shadow-glow hover:animate-glow' onClick={scrollLeft}><FaAngleLeft size={18}/></button>
+                    <button className='bg-dark-800 hover:bg-dark-700 text-neon-blue border border-neon-blue rounded-full p-3 transition-all duration-300 transform hover:scale-110 hover:shadow-glow hover:animate-glow' onClick={scrollRight}><FaAngleRight size={18}/></button>
                 </div>
             </div>
 
                 
-           <div className='flex items-center gap-6 overflow-scroll scrollbar-none transition-all' ref={scrollElement}>
+           <div className='flex items-center gap-6 overflow-x-auto scrollbar-none transition-all pb-4' ref={scrollElement}>
 
            {   loading ? (
                 loadingList.map((product,index)=>{
                     return(
-                        <div key={index} className='w-full min-w-[320px] md:min-w-[360px] max-w-[320px] md:max-w-[360px] h-40 bg-white rounded-2xl shadow-card flex overflow-hidden'>
-                            <div className='bg-gradient-to-br from-gray-100 to-gray-200 h-full p-4 min-w-[140px] md:min-w-[160px] animate-pulse'>
-
+                        <div key={index} className='w-full min-w-[300px] md:min-w-[360px] max-w-[300px] md:max-w-[360px] h-40 bg-dark-800 rounded-2xl shadow-card border border-dark-600 flex overflow-hidden'>
+                            <div className='bg-gradient-to-br from-dark-700 to-dark-800 h-full p-4 min-w-[140px] md:min-w-[160px] shimmer'>
                             </div>
                             <div className='p-6 grid w-full gap-3'>
-                                <h2 className='font-medium text-base md:text-lg bg-gradient-to-r from-gray-200 to-gray-300 animate-pulse h-4 rounded-lg'></h2>
-                                <p className='bg-gradient-to-r from-gray-200 to-gray-300 animate-pulse h-3 w-20 rounded-lg'></p>
+                                <h2 className='font-medium text-base md:text-lg bg-gradient-to-r from-dark-600 to-dark-700 shimmer h-5 rounded-lg'></h2>
+                                <p className='bg-gradient-to-r from-dark-600 to-dark-700 shimmer h-3 w-20 rounded-lg'></p>
                                 <div className='flex gap-3 w-full'>
-                                    <p className='bg-gradient-to-r from-gray-200 to-gray-300 w-16 animate-pulse h-4 rounded-lg'></p>
-                                    <p className='bg-gradient-to-r from-gray-200 to-gray-300 w-16 animate-pulse h-4 rounded-lg'></p>
+                                    <p className='bg-gradient-to-r from-dark-600 to-dark-700 w-16 shimmer h-4 rounded-lg'></p>
+                                    <p className='bg-gradient-to-r from-dark-600 to-dark-700 w-16 shimmer h-4 rounded-lg'></p>
                                 </div>
-                                <div className='bg-gradient-to-r from-gray-200 to-gray-300 animate-pulse h-8 rounded-full'></div>
+                                <div className='bg-gradient-to-r from-dark-600 to-dark-700 shimmer h-8 rounded-full'></div>
                             </div>
                         </div>
                     )
@@ -79,23 +76,24 @@ const HorizontalCardProduct = ({category, heading}) => {
            ) : (
             data.map((product,index)=>{
                 return(
-                    <div key={index} className='group relative w-full min-w-[320px] md:min-w-[360px] max-w-[320px] md:max-w-[360px] h-40 bg-white rounded-2xl shadow-card hover:shadow-card-hover flex overflow-hidden transition-all duration-300 transform hover:-translate-y-1'>
-                        <Link to={"product/"+product?._id} className='flex w-full'>
-                            <div className='bg-gradient-to-br from-gray-50 to-gray-100 h-full p-4 min-w-[140px] md:min-w-[160px] flex items-center justify-center'>
-                                <img src={product.productImage[0]} className='object-scale-down h-full max-h-28 group-hover:scale-110 transition-transform duration-300'/>
+                    <div key={index} className='group relative w-full min-w-[300px] md:min-w-[360px] max-w-[300px] md:max-w-[360px] h-40 bg-backgroundCard rounded-2xl shadow-card border border-secondary hover:border-primary hover:shadow-glow flex overflow-hidden transition-all duration-300 transform hover:-translate-y-1'>
+                        <Link to={"/product/"+product?._id} className='flex w-full'>
+                            <div className='bg-gradient-to-br from-secondary to-backgroundCard h-full w-1/3 p-4 flex items-center justify-center relative overflow-hidden'>
+                                <div className='absolute inset-0 bg-gradient-to-br from-backgroundCard/50 to-backgroundCard/50 opacity-70 group-hover:opacity-0 transition-opacity duration-300'></div>
+                                <img src={product.productImage[0]} className='object-contain h-full w-full group-hover:scale-110 transition-transform duration-300 z-10'/>
                             </div>
                             <div className='p-6 flex flex-col justify-between flex-1'>
                                 <div>
-                                    <h2 className='font-semibold text-base md:text-lg text-ellipsis line-clamp-2 text-gray-800 group-hover:text-primary-600 transition-colors duration-300'>{product?.productName}</h2>
-                                    <p className='capitalize text-gray-500 text-sm mt-1 font-medium'>{product?.category}</p>
+                                    <h2 className='font-semibold text-base md:text-lg text-ellipsis line-clamp-2 text-textPrimary group-hover:text-primary transition-colors duration-300'>{product?.productName}</h2>
+                                    <p className='capitalize text-textSecondary text-sm mt-1 font-medium'>{product?.category}</p>
                                 </div>
                                 <div className='flex items-center justify-between'>
                                     <div className='flex items-center gap-3'>
-                                        <p className='text-primary-600 font-bold text-lg'>{ displayINRCurrency(product?.sellingPrice) }</p>
-                                        <p className='text-gray-400 line-through text-sm'>{ displayINRCurrency(product?.price)  }</p>
+                                        <p className='text-primary font-bold text-lg group-hover:animate-neon-pulse'>{ displayINRCurrency(product?.sellingPrice) }</p>
+                                        <p className='text-textSecondary line-through text-sm'>{ displayINRCurrency(product?.price)  }</p>
                                     </div>
                                     <button 
-                                        className='bg-gradient-to-r from-secondary-500 to-secondary-600 hover:from-secondary-600 hover:to-secondary-700 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg transform hover:scale-105 transition-all duration-300' 
+                                        className='bg-primary text-backgroundMain border border-primary hover:bg-accent hover:text-backgroundMain px-4 py-2 rounded-full text-sm font-semibold shadow-lg transform hover:scale-105 transition-all duration-300 hover:shadow-[0_0_15px_rgba(29,185,255,0.5)] font-ui' 
                                         onClick={(e)=>handleAddToCart(e,product?._id)}
                                     >
                                         Add to Cart

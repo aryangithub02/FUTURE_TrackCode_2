@@ -47,7 +47,6 @@ const BannerProduct = () => {
         }
     }
 
-
     useEffect(()=>{
         const interval = setInterval(()=>{
             if(desktopImages.length - 1 > currentImage){
@@ -60,82 +59,70 @@ const BannerProduct = () => {
         return ()=> clearInterval(interval)
     },[currentImage])
 
+
   return (
-    <div className='container mx-auto px-4 mb-12'>
-        <div className='h-64 md:h-96 w-full bg-gradient-to-br from-primary-500 via-primary-600 to-primary-700 relative rounded-2xl overflow-hidden shadow-2xl'>
-            {/* Decorative elements */}
-            <div className='absolute top-0 left-0 w-full h-full'>
-                <div className='absolute top-10 right-10 w-32 h-32 bg-white/10 rounded-full blur-xl'></div>
-                <div className='absolute bottom-10 left-10 w-24 h-24 bg-secondary-400/20 rounded-full blur-lg'></div>
-                <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-40 h-40 bg-white/5 rounded-full blur-2xl'></div>
+    <div className='container mx-auto px-4 rounded '>
+        <div className='h-56 md:h-72 w-full bg-slate-200 relative'>
+
+            <div className='absolute z-10 h-full w-full md:flex items-center hidden '>
+                <div className='flex justify-between w-full text-2xl'>
+                    <button onClick={preveImage} className='bg-backgroundCard/80 backdrop-blur-sm shadow-lg rounded-full p-3 border border-primary hover:border-primary hover:bg-secondary/90 transition-all duration-300 transform hover:scale-110 hover:shadow-glow'><FaAngleLeft className='text-primary'/></button>
+                    <button onClick={nextImage} className='bg-backgroundCard/80 backdrop-blur-sm shadow-lg rounded-full p-3 border border-primary hover:border-primary hover:bg-secondary/90 transition-all duration-300 transform hover:scale-110 hover:shadow-glow'><FaAngleRight className='text-primary'/></button>
+                </div>
             </div>
 
-                <div className='absolute z-20 h-full w-full md:flex items-center hidden px-8'>
-                    <div className=' flex justify-between w-full text-2xl'>
-                        <button onClick={preveImage} className='bg-white/20 backdrop-blur-sm shadow-lg rounded-full p-3 hover:bg-white/30 transition-all duration-300 transform hover:scale-110'><FaAngleLeft className='text-white'/></button>
-                        <button onClick={nextImage} className='bg-white/20 backdrop-blur-sm shadow-lg rounded-full p-3 hover:bg-white/30 transition-all duration-300 transform hover:scale-110'><FaAngleRight className='text-white'/></button> 
-                    </div>
-                </div>
-
-                {/**desktop and tablet version */}
-              <div className='hidden md:flex h-full w-full overflow-hidden relative z-10'>
+            {/* desktop and tablet version */}
+            <div className='hidden md:flex h-full w-full overflow-hidden relative z-10'>
                 {
-                        desktopImages.map((imageURl,index)=>{
-                            return(
+                    desktopImages.map((imageURl,index)=>{
+                        return(
                             <div className='w-full h-full min-w-full min-h-full transition-all duration-700 ease-in-out relative' key={imageURl} style={{transform : `translateX(-${currentImage * 100}%)`}}>
-                                <img src={imageURl} className='w-full h-full object-cover opacity-80'/>
-                                <div className='absolute inset-0 bg-gradient-to-r from-black/50 via-transparent to-transparent'></div>
+                                <img src={imageURl} className='w-full h-full object-cover opacity-90'/>
                                 {/* Content Overlay */}
                                 <div className='absolute inset-0 flex items-center justify-start pl-16'>
-                                    <div className='text-white max-w-lg animate-fade-in'>
-                                        <h1 className='text-4xl md:text-6xl font-bold mb-4 leading-tight'>Discover Amazing Products</h1>
-                                        <p className='text-xl md:text-2xl mb-8 opacity-90'>Find the best deals on premium electronics</p>
-                                        <button className='bg-secondary-500 hover:bg-secondary-600 text-white px-8 py-4 rounded-full font-semibold text-lg shadow-lg transform hover:scale-105 transition-all duration-300'>Shop Now</button>
-                                    </div>
+                                    
                                 </div>
                             </div>
-                            )
-                        })
+                        )
+                    })
                 }
-              </div>
+            </div>
 
-
-                {/**mobile version */}
-                <div className='flex h-full w-full overflow-hidden md:hidden relative z-10'>
+            {/* mobile version */}
+            <div className='flex h-full w-full overflow-hidden md:hidden relative z-10'>
                 {
-                        mobileImages.map((imageURl,index)=>{
-                            return(
+                    mobileImages.map((imageURl,index)=>{
+                        return(
                             <div className='w-full h-full min-w-full min-h-full transition-all duration-700 ease-in-out relative' key={imageURl} style={{transform : `translateX(-${currentImage * 100}%)`}}>
-                                <img src={imageURl} className='w-full h-full object-cover opacity-80'/>
-                                <div className='absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent'></div>
+                                <img src={imageURl} className='w-full h-full object-cover opacity-90'/>
                                 {/* Mobile Content Overlay */}
                                 <div className='absolute inset-0 flex items-end justify-center pb-8'>
-                                    <div className='text-white text-center px-4 animate-fade-in'>
-                                        <h2 className='text-2xl font-bold mb-2'>Amazing Products</h2>
-                                        <p className='text-sm mb-4 opacity-90'>Best deals on electronics</p>
-                                        <button className='bg-secondary-500 hover:bg-secondary-600 text-white px-6 py-2 rounded-full font-semibold shadow-lg'>Shop Now</button>
+                                    <div className='text-textPrimary text-center px-4 animate-fade-in bg-backgroundCard/40 backdrop-blur-sm rounded-xl p-4 mx-4 border border-secondary'>
+                                        <h2 className='text-2xl font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent hover:animate-neon-pulse'>Enter 999 Store</h2>
+                                        <p className='text-sm mb-4 text-textSecondary'>Wireless at ₹999</p>
+                                        <button className='bg-secondary border border-primary text-primary hover:bg-primary hover:text-backgroundMain px-6 py-2 rounded-full font-semibold shadow-lg transition-all duration-300'>Shop Now</button>
                                     </div>
                                 </div>
                             </div>
-                            )
-                        })
+                        )
+                    })
                 }
-              </div>
+            </div>
 
-                {/* Navigation Dots */}
-                <div className='absolute bottom-4 left-1/2 transform -translate-x-1/2 z-30 flex space-x-2'>
-                    {desktopImages.map((_, index) => (
-                        <button
-                            key={index}
-                            onClick={() => setCurrentImage(index)}
-                            className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                                currentImage === index 
-                                    ? 'bg-white shadow-lg' 
-                                    : 'bg-white/50 hover:bg-white/70'
-                            }`}
-                        />
-                    ))}
-                </div>
+            {/* Navigation Dots */}
+            <div className='absolute bottom-4 left-1/2 transform -translate-x-1/2 z-30 flex space-x-2'>
+                {desktopImages.map((_, index) => (
+                    <button
+                        key={index}
+                        onClick={() => setCurrentImage(index)}
+                        className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                            currentImage === index 
+                                ? 'bg-primary shadow-lg shadow-primary/30' 
+                                : 'bg-secondary hover:bg-primary/50'
+                        }`}
+                    />
+                ))}
+            </div>
 
         </div>
     </div>

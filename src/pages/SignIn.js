@@ -1,11 +1,11 @@
+// src/pages/SignIn.js
 import React from "react";
-import { SignUp as ClerkSignUp, AuthenticateWithRedirectCallback } from "@clerk/clerk-react";
+import { SignIn as ClerkSignIn, AuthenticateWithRedirectCallback } from "@clerk/clerk-react";
 import { useLocation } from "react-router-dom";
 
-const SignUp = () => {
+const SignIn = () => {
   const location = useLocation();
 
-  // Handle OAuth callback
   if (location.hash === "#/sso-callback" || location.pathname.includes("sso-callback")) {
     return <AuthenticateWithRedirectCallback />;
   }
@@ -13,15 +13,15 @@ const SignUp = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-50">
       <div className="w-full max-w-md p-8">
-        <ClerkSignUp
+        <ClerkSignIn
           routing="path"
-          path="/sign-up"
-          signInUrl="/login"
-          afterSignUpUrl="/"
+          path="/login"
+          signUpUrl="/sign-up"
+          afterSignInUrl="/"
           appearance={{
             elements: {
               rootBox: "mx-auto",
-              card: "shadow-lg",
+              card: "shadow-lg rounded-2xl",
             },
           }}
         />
@@ -30,4 +30,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default SignIn;

@@ -11,13 +11,13 @@ const Home = () => {
       <BannerProduct/>
 
       {/* Featured Products Section */}
-      <div className='bg-white py-8'>
+      <div className='bg-dark-900 py-8 border-t border-b border-dark-700'>
         <HorizontalCardProduct category={"beauty"} heading={"💄 Beauty Products"}/>
         <HorizontalCardProduct category={"mens-watches"} heading={"⌚ Men's Watches"}/>
       </div>
 
       {/* Main Products Grid */}
-      <div className='space-y-4'>
+      <div className='space-y-8 py-4 px-2 sm:px-0'>
         <VerticalCardProduct category={"smartphones"} heading={"📱 Latest Smartphones"}/>
         <VerticalCardProduct category={"laptops"} heading={"💻 Laptops & Computers"}/>
         <VerticalCardProduct category={"furniture"} heading={"🪑 Home & Furniture"}/>

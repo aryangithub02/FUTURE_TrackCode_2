@@ -53,10 +53,10 @@ const CategoryList = () => {
                     categoryProduct.map((product,index)=>{
                         return(
                             <Link to={"/product-category?category="+product?.category} className='flex-shrink-0 group cursor-pointer' key={product?.category}>
-                                <div className='w-20 h-20 md:w-24 md:h-24 rounded-2xl overflow-hidden p-4 bg-gradient-to-br from-primary-50 to-primary-100 flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 transform group-hover:scale-110'>
+                                <div className='w-20 h-20 md:w-24 md:h-24 rounded-2xl overflow-hidden p-4 bg-backgroundCard border border-primary/30 flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 transform group-hover:scale-110'>
                                     <img src={product?.productImage[0]} alt={product?.category} className='h-full object-scale-down mix-blend-multiply group-hover:scale-110 transition-all duration-300'/>
                                 </div>
-                                <p className='text-center text-sm md:text-base capitalize mt-2 font-semibold text-gray-700 group-hover:text-primary-600 transition-colors duration-300'>
+                                <p className='text-center text-sm md:text-base capitalize mt-2 font-semibold text-textSecondary group-hover:text-primary transition-colors duration-300 font-body'>
                                     {API_MODE === 'dummyjson' ? dummyJsonApi.getCategoryDisplayName(product?.category) : product?.category}
                                 </p>
                             </Link>

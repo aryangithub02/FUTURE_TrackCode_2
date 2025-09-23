@@ -1,0 +1,19 @@
+/* Font styling for the website */
+
+/* Headings (H1-H6) */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+}
+
+/* Body text and paragraphs */
+body, p, div, span, li, td, th {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+}
+
+/* Buttons and UI elements */
+button, .btn, input[type="button"], input[type="submit"], .nav-link, .menu-item {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+}

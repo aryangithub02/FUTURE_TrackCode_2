@@ -4,6 +4,10 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  color-scheme: dark;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -16,7 +20,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  @apply bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen;
+  @apply bg-gradient-to-br from-dark-900 to-dark-800 text-dark-50 min-h-screen;
 }
 
 code {
@@ -65,7 +69,32 @@ html {
 }
 
 .shimmer {
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background: linear-gradient(90deg, #303030 25%, #404040 50%, #303030 75%);
   background-size: 200% 100%;
   animation: shimmer 2s infinite;
+}
+
+/* Dark mode custom classes */
+.neon-border {
+  @apply border border-neon-blue shadow-[0_0_10px_rgba(0,242,255,0.5)];
+}
+
+.neon-text {
+  @apply text-neon-blue animate-neon-pulse;
+}
+
+.card-dark {
+  @apply bg-dark-600 border border-dark-400 shadow-lg hover:shadow-xl transition-all duration-300;
+}
+
+.btn-neon {
+  @apply bg-dark-700 text-neon-blue border border-neon-blue hover:bg-neon-blue hover:text-dark-900 transition-all duration-300 shadow-[0_0_10px_rgba(0,242,255,0.3)] hover:shadow-[0_0_15px_rgba(0,242,255,0.5)];
+}
+
+.btn-primary-dark {
+  @apply bg-dark-700 text-neon-blue border border-neon-blue hover:bg-dark-600 transition-all duration-300 shadow-md hover:shadow-lg;
+}
+
+.input-dark {
+  @apply bg-dark-700 border border-dark-400 text-dark-50 placeholder-dark-200 focus:border-neon-blue focus:ring-1 focus:ring-neon-blue transition-all duration-300;
 }
